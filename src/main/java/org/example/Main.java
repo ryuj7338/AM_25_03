@@ -21,15 +21,15 @@ public class Main {
 
         makeTestData();
 
-        while(true) {
+        while (true) {
             System.out.print("명령어) ");
             String cmd = sc.nextLine().trim();
 
-            if(cmd.length() == 0) {
+            if (cmd.length() == 0) {
                 System.out.println("명령어를 입력하세요.");
                 continue;
             }
-            if(cmd.equals("exit")) {
+            if (cmd.equals("exit")) {
                 System.out.println("== 프로그램 종료 ==");
                 break;
             }
@@ -47,30 +47,36 @@ public class Main {
                 System.out.print("내용: ");
                 String content = sc.nextLine().trim();
 
-                Article article =new Article(id, regDate, updateDate, title, content);
+                Article article = new Article(id, regDate, updateDate, title, content);
                 articles.add(article);
 
-                System.out.println(id+"번 글이 작성되었습니다.");
+                System.out.println(id + "번 글이 작성되었습니다.");
                 lastArticleId++;
 
-            }else if(cmd.equals("article list")) {
+            } else if (cmd.startsWith("article list")) {
 
-                if(articles.size() == 0) {
+                if (articles.size() == 0) {
                     System.out.println("목록이 없습니다.");
-                }else {
+                    continue;
+                }
+                String searchKeyword = cmd.split(" ")[2];
+                
                     System.out.println("   번호   /   날짜   /   제목   /   내용   ");
-                    for(int i = articles.size() - 1; i >= 0; i--) {
+                    for (int i = articles.size() - 1; i >= 0; i--) {
                         Article article = articles.get(i);
-                        if(Util.getNowStr().split(" ")[0].equals(article.getRegDate().split(" ")[0])) {
-                            System.out.printf("   %d   /   %s   /   %s   /   %s   \n",article.getId(), article.getRegDate().split(" ")[1],article.getTitle(),article.getContent());
+                        if (Util.getNowStr().split(" ")[0].equals(article.getRegDate().split(" ")[0])) {
+                            System.out.printf("   %d   /   %s   /   %s   /   %s   \n", article.getId(), article.getRegDate().split(" ")[1], article.getTitle(), article.getContent());
 
-                        }else{
-                            System.out.printf("   %d   /   %s   /   %s   /   %s   \n",article.getId(), article.getRegDate().split(" ")[0],article.getTitle(),article.getContent());
+                        } else {
+                            System.out.printf("   %d   /   %s   /   %s   /   %s   \n", article.getId(), article.getRegDate().split(" ")[0], article.getTitle(), article.getContent());
 
                         }
                     }
-                }
-            }else if(cmd.startsWith("article detail")) {
+
+
+
+
+            } else if (cmd.startsWith("article detail")) {
 
 
                 int id = Integer.parseInt(cmd.split(" ")[2]);
@@ -83,11 +89,11 @@ public class Main {
                     continue;
                 }
                 System.out.println("번호: " + foundArticle.getId());
-                System.out.println("작성 날짜: " +foundArticle.getRegDate());
+                System.out.println("작성 날짜: " + foundArticle.getRegDate());
                 System.out.println("수정 날짜: " + foundArticle.getUpdateDate());
                 System.out.println("제목: " + foundArticle.getTitle());
                 System.out.println("내용: " + foundArticle.getContent());
-            }else if(cmd.startsWith("article delete")) {
+            } else if (cmd.startsWith("article delete")) {
 
                 int id = Integer.parseInt(cmd.split(" ")[2]);
 
@@ -99,14 +105,14 @@ public class Main {
                     continue;
                 }
                 articles.remove(foundArticle);
-                System.out.printf("%d번 게시글이 삭제되었습니다.",id);
-            } else if(cmd.startsWith("article modify")) {
+                System.out.printf("%d번 게시글이 삭제되었습니다.", id);
+            } else if (cmd.startsWith("article modify")) {
 
                 int id = Integer.parseInt(cmd.split(" ")[2]);
 
                 Article foundArticle = getArticle(id);
 
-                
+
                 if (foundArticle == null) {
                     System.out.printf("%d번 게시글은 없습니다.", id);
                     continue;
@@ -122,8 +128,8 @@ public class Main {
                 foundArticle.setTitle(newTitle);
                 foundArticle.setContent(newContent);
 
-                System.out.printf("%d번 게시글이 수정되었습니다.\n",id);
-            }else {
+                System.out.printf("%d번 게시글이 수정되었습니다.\n", id);
+            } else {
                 System.out.println("사용할 수 없는 명령어입니다.");
             }
         }
@@ -134,7 +140,7 @@ public class Main {
     private static Article getArticle(int id) {
         for (Article article : articles) {
             if (article.getId() == id) {
-                 return article;
+                return article;
 
             }
         }
@@ -142,17 +148,14 @@ public class Main {
     }
 
 
-
-    /** 데이터 테스트 함수 생성**/
+    /**데이터 테스트 함수 생성**/
     public static void makeTestData() {
         System.out.println("== 테스트 데이터 생성 ==");
 
-        articles.add(new Article(1,"2025-01-01","2025-03-20","제목1","내용 1"));
-        articles.add(new Article(2, Util.getNowStr(),Util.getNowStr(),"제목2","내용 2"));
-        articles.add(new Article(3,Util.getNowStr(),Util.getNowStr(),"제목3","내용 3"));
+        articles.add(new Article(1, "2025-01-01", "2025-03-20", "제목1", "내용 1"));
+        articles.add(new Article(2, Util.getNowStr(), Util.getNowStr(), "제목2", "내용 2"));
+        articles.add(new Article(3, Util.getNowStr(), Util.getNowStr(), "제목3", "내용 3"));
     }
-
-
 
 
 }
@@ -165,7 +168,7 @@ class Article {
     private String title;
     private String content;
 
-    public Article(int id, String regDate, String updateDate,String title, String content) {
+    public Article(int id, String regDate, String updateDate, String title, String content) {
         this.id = id;
         this.regDate = regDate;
         this.updateDate = updateDate;
@@ -180,6 +183,7 @@ class Article {
     public void setId(int id) {
         this.id = id;
     }
+
     public String getRegDate() {
         return regDate;
     }
