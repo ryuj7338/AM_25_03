@@ -1,6 +1,8 @@
 package org.example;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Main {
@@ -29,14 +31,16 @@ public class Main {
             if (cmd.equals("article write")) {
 
                 int id = lastArticleId + 1;
-
+                LocalTime now = LocalTime.now();
+                String formatedNow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                String regDate = formatedNow;
 
                 System.out.print("제목: ");
                 String title = sc.nextLine().trim();
                 System.out.print("내용: ");
                 String content = sc.nextLine().trim();
 
-                Article article =new Article(id, title, content);
+                Article article =new Article(id, regDate, title, content);
                 articles.add(article);
 
                 System.out.println(id+"번 글이 작성되었습니다.");
@@ -72,7 +76,7 @@ public class Main {
                     continue;
                 }
                 System.out.println("번호: " + foundArticle.getId());
-                System.out.println("날짜: " +);
+                System.out.println("날짜: " +foundArticle.getRegDate());
                 System.out.println("제목: " + foundArticle.getTitle());
                 System.out.println("내용: " + foundArticle.getContent());
             }else if(cmd.startsWith("article delete")) {
@@ -132,11 +136,13 @@ public class Main {
 
 class Article {
     private int id;
+    private String regDate;
     private String title;
     private String content;
 
-    public Article(int id, String title, String content) {
+    public Article(int id, String regDate,String title, String content) {
         this.id = id;
+        this.regDate = regDate;
         this.title = title;
         this.content = content;
     }
@@ -148,6 +154,14 @@ class Article {
     public void setId(int id) {
         this.id = id;
     }
+    public String getRegDate() {
+        return regDate;
+    }
+
+    public void setRegDate(String regDate) {
+        this.regDate = regDate;
+    }
+
 
     public String getTitle() {
         return title;
