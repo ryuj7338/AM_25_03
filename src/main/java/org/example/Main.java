@@ -4,10 +4,12 @@ package org.example;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Main {
 
     static List<Article> articles = new ArrayList<>();
+    static List<Join> joins = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -17,7 +19,7 @@ public class Main {
 
 
         int lastArticleId = 3;
-
+        int lastMembersId = 0;
 
         makeTestData();
 
@@ -60,10 +62,27 @@ public class Main {
                     continue;
                 }
                 String searchKeyword = cmd.split(" ")[2];
-                
+
+                List<Article> foundTitle = articles;
+
+                if (searchKeyword.length() > 0) {
+
+                    foundTitle = new ArrayList<>();
+
+                    for (Article article : articles) {
+                        if (article.getTitle().contains(searchKeyword)) {
+                            foundTitle.add(article);
+                        }
+                    }
+
+                }  if (searchKeyword.length() == 0) {
+                    System.out.println("검색 결과가 없습니다.");
+                    continue;
+                }
+
                     System.out.println("   번호   /   날짜   /   제목   /   내용   ");
-                    for (int i = articles.size() - 1; i >= 0; i--) {
-                        Article article = articles.get(i);
+                    for (int i = foundTitle.size() - 1; i >= 0; i--) {
+                        Article article = foundTitle.get(i);
                         if (Util.getNowStr().split(" ")[0].equals(article.getRegDate().split(" ")[0])) {
                             System.out.printf("   %d   /   %s   /   %s   /   %s   \n", article.getId(), article.getRegDate().split(" ")[1], article.getTitle(), article.getContent());
 
@@ -72,9 +91,6 @@ public class Main {
 
                         }
                     }
-
-
-
 
             } else if (cmd.startsWith("article detail")) {
 
@@ -129,7 +145,34 @@ public class Main {
                 foundArticle.setContent(newContent);
 
                 System.out.printf("%d번 게시글이 수정되었습니다.\n", id);
-            } else {
+            }else if (cmd.equals("member join")) {
+
+                int id = lastMembersId + 1;
+
+
+
+                String regDate = Util.getNowStr();
+                System.out.print("이름: ");
+                String name = sc.nextLine().trim();
+                System.out.print("아이디: ");
+                String loginId = sc.nextLine().trim();
+
+
+                System.out.println("아이디가 생성되었습니다.");
+                System.out.print("비밀번호: ");
+                String loginPw = sc.nextLine().trim();
+                System.out.println("비밀번호가 설정되었습니다.");
+
+                Join join = new Join(id, regDate, loginId, loginPw, name);
+                joins.add(join);
+                System.out.print("%d번 회원이 가입되었습니다.\n");
+                lastMembersId++;
+
+
+
+
+            }
+            else {
                 System.out.println("사용할 수 없는 명령어입니다.");
             }
         }
@@ -159,7 +202,61 @@ public class Main {
 
 
 }
+class Join  {
+    int id;
+    String regDate;
+    String loginId;
+    String loginPw;
+    String name;
 
+    public Join(int id, String regDate, String loginId, String loginPw, String name) {
+        this.id = id;
+        this.regDate = regDate;
+        this.loginId = loginId;
+        this.loginPw = loginPw;
+        this.name = name;
+    }
+
+    public String getRegDate() {
+        return regDate;
+    }
+
+    public void setRegDate(String regDate) {
+        this.regDate = regDate;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getLoginId() {
+        return loginId;
+    }
+
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
+
+    public String getLoginPw() {
+        return loginPw;
+    }
+
+    public void setLoginPw(String loginPw) {
+        this.loginPw = loginPw;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
 
 class Article {
     private int id;
@@ -175,6 +272,8 @@ class Article {
         this.title = title;
         this.content = content;
     }
+
+
 
     public int getId() {
         return id;
