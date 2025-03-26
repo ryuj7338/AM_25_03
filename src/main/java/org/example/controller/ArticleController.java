@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import org.example.dto.Article;
+import org.example.dto.MemberJoin;
 import org.example.util.Util;
 
 import java.util.ArrayList;
@@ -22,10 +23,6 @@ public class ArticleController extends Controller {
 
         switch (actionMethodName) {
             case "write":
-                if (isLogined() == false) {
-                    System.out.println("로그인이 필요합니다.");
-                    return;
-                }
                 articleWrite();
                 break;
             case "list":
@@ -35,17 +32,9 @@ public class ArticleController extends Controller {
                 articleDetail();
                 break;
             case "delete":
-                if (isLogined() == false) {
-                    System.out.println("로그인이 필요합니다.");
-                    return;
-                }
                 articleDelete();
                 break;
             case "modify":
-                if (isLogined() == false) {
-                    System.out.println("로그인이 필요합니다.");
-                    return;
-                }
                 articleModify();
                 break;
             default:
@@ -66,7 +55,7 @@ public class ArticleController extends Controller {
         System.out.print("내용: ");
         String content = sc.nextLine().trim();
 
-        Article article = new Article(id, regDate, updateDate, title, content);
+        Article article = new Article(id, regDate, updateDate, loginedMember.getId(), title, content);
         articles.add(article);
 
         System.out.println(id + "번 글이 작성되었습니다.");
@@ -132,7 +121,6 @@ public class ArticleController extends Controller {
     }
 
 
-
     private void articleDelete() {
         int id = Integer.parseInt(cmd.split(" ")[2]);
 
@@ -188,9 +176,9 @@ public class ArticleController extends Controller {
     public void makeTestData() {
         System.out.println("== 테스트 데이터 생성 ==");
 
-        articles.add(new Article(1, "2025-01-01", "2025-03-20", "제목1", "내용 1"));
-        articles.add(new Article(2, Util.getNowStr(), Util.getNowStr(), "제목2", "내용 2"));
-        articles.add(new Article(3, Util.getNowStr(), Util.getNowStr(), "제목3", "내용 3"));
+        articles.add(new Article(1, "2025-01-01", "2025-03-20", 1,"제목1", "내용 1"));
+        articles.add(new Article(2, Util.getNowStr(), Util.getNowStr(), 1,"제목2", "내용 2"));
+        articles.add(new Article(3, Util.getNowStr(), Util.getNowStr(), 2, "제목3", "내용 3"));
     }
 
 }

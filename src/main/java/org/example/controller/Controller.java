@@ -10,6 +10,8 @@ public class Controller {
         return loginedMember != null;
     }
 
+
+
     public void doAction(String cmd, String actionMethodName) {
 
     }

@@ -142,7 +142,7 @@ public class MemberController extends Controller {
     public void makeMemberData() {
         System.out.println("== 회원 테스트 데이터 생성 ==");
 
-        memberJoins.add(new MemberJoin(1, "2025-01-01", "test1", "test1", "test1"));
+        memberJoins.add(new MemberJoin(1, Util.getNowStr(), "test1", "test1", "test1"));
         memberJoins.add(new MemberJoin(2, Util.getNowStr(), "test2", "test2", "test2"));
         memberJoins.add(new MemberJoin(3, Util.getNowStr(), "test3", "test3", "test3"));
 

@@ -45,18 +45,19 @@ public class App {
                 System.out.println("명령어를 확인하세요.");
                 continue;
             }
-            
+
+
             String actionMethodName = comBits[1];
 
             String forLogincheck = controllerName +"/" + actionMethodName;
 
             switch (forLogincheck) {
-                case "article/wrtie":
+                case "article/write":
                 case "article/delete":
                 case "article/modify":
                 case "member/logout":
                     if (Controller.isLogined() == false) {
-                        System.out.println("로그인 필요해");
+                        System.out.println("로그인이 필요합니다.");
                         continue;
                     }
                     break;
@@ -66,7 +67,7 @@ public class App {
                 case "member/login":
                 case "member/join":
                     if (Controller.isLogined()) {
-                        System.out.println("로그아웃 필요해");
+                        System.out.println("로그아웃을 해야합니다.");
                         continue;
                     }
                     break;
