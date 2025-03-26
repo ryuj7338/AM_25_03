@@ -12,7 +12,7 @@ public class MemberController extends Controller {
     private Scanner sc;
     private List<MemberJoin> memberJoins = new ArrayList<>();
     private String cmd;
-    private MemberJoin loginedMember = null;
+
     int lastMembersId = 3;
 
     public MemberController(Scanner sc) {
@@ -37,9 +37,7 @@ public class MemberController extends Controller {
                 break;
         }
     }
-    private boolean isLogined() {
-        return loginedMember != null;
-    }
+
     private void memberLogin() {
         if (isLogined()) {
             System.out.println("이미 로그인되었습니다.");

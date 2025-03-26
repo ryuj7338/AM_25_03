@@ -22,6 +22,10 @@ public class ArticleController extends Controller {
 
         switch (actionMethodName) {
             case "write":
+                if (isLogined() == false) {
+                    System.out.println("로그인이 필요합니다.");
+                    return;
+                }
                 articleWrite();
                 break;
             case "list":
@@ -31,9 +35,17 @@ public class ArticleController extends Controller {
                 articleDetail();
                 break;
             case "delete":
+                if (isLogined() == false) {
+                    System.out.println("로그인이 필요합니다.");
+                    return;
+                }
                 articleDelete();
                 break;
             case "modify":
+                if (isLogined() == false) {
+                    System.out.println("로그인이 필요합니다.");
+                    return;
+                }
                 articleModify();
                 break;
             default:
@@ -43,6 +55,8 @@ public class ArticleController extends Controller {
     }
 
     private void articleWrite() {
+
+
         System.out.println("== 게시글 작성 ==");
         int id = lastArticleId + 1;
         String regDate = Util.getNowStr();
@@ -117,11 +131,12 @@ public class ArticleController extends Controller {
         System.out.println("내용: " + foundArticle.getContent());
     }
 
+
+
     private void articleDelete() {
         int id = Integer.parseInt(cmd.split(" ")[2]);
 
         Article foundArticle = getArticle(id);
-
 
         if (foundArticle == null) {
             System.out.printf("%d번 게시글은 없습니다.", id);
