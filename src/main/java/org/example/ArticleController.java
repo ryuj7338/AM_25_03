@@ -14,8 +14,8 @@ public class ArticleController {
     }
 
     public void articleWrite() {
+        System.out.println("== 게시글 작성 ==");
         int id = lastArticleId + 1;
-
         String regDate = Util.getNowStr();
         String updateDate = Util.getNowStr();
         System.out.print("제목: ");
@@ -32,17 +32,18 @@ public class ArticleController {
     }
 
     public void articleList(String cmd) {
-
+        System.out.println("== 게시글 목록 ==");
         if (articles.size() == 0) {
             System.out.println("목록이 없습니다.");
             return;
         }
+
         String searchKeyword = cmd.substring("article list".length()).trim();
 
         List<Article> foundTitle = articles;
 
         if (searchKeyword.length() > 0) {
-
+            System.out.println("검색어: " + searchKeyword);
             foundTitle = new ArrayList<>();
 
             for (Article article : articles) {

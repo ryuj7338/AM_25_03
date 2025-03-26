@@ -20,6 +20,8 @@ public class App {
         articleController.makeTestData();
         memberController.makeMemberData();
 
+        
+
         while (true) {
             System.out.print("명령어) ");
             String cmd = sc.nextLine().trim();
