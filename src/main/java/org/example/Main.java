@@ -4,7 +4,7 @@ package org.example;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
+
 
 public class Main {
 
@@ -19,9 +19,10 @@ public class Main {
 
 
         int lastArticleId = 3;
-        int lastMembersId = 0;
+        int lastMembersId = 3;
 
         makeTestData();
+        makeMenberData();
 
         while (true) {
             System.out.print("명령어) ");
@@ -61,7 +62,7 @@ public class Main {
                     System.out.println("목록이 없습니다.");
                     continue;
                 }
-                String searchKeyword = cmd.split(" ")[2];
+                String searchKeyword = cmd.substring("article list".length()).trim();
 
                 List<Article> foundTitle = articles;
 
@@ -75,7 +76,7 @@ public class Main {
                         }
                     }
 
-                }  if (searchKeyword.length() == 0) {
+                }  if (foundTitle.size() == 0) {
                     System.out.println("검색 결과가 없습니다.");
                     continue;
                 }
@@ -199,6 +200,15 @@ public class Main {
             }
         }
 
+
+    }
+
+    private static void makeMenberData() {
+        System.out.println("== 회원 테스트 데이터 생성 ==");
+
+        joins.add(new Join(1,"2025-01-01","test1","test1","test1"));
+        joins.add(new Join(2,Util.getNowStr(),"test2","test2","test2"));
+        joins.add(new Join(3,Util.getNowStr(),"test3","test3","test3"));
 
     }
 
