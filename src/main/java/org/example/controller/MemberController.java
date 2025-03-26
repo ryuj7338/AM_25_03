@@ -44,9 +44,9 @@ public class MemberController extends Controller {
             return;
         }
         System.out.println("== 로그인 ==");
-        System.out.println("로그인 아이디: ");
+        System.out.print("로그인 아이디: ");
         String loginId = sc.nextLine().trim();
-        System.out.println("비밀번호: ");
+        System.out.print("비밀번호: ");
         String passWord = sc.nextLine().trim();
 
         MemberJoin memberJoin = getMemberByLoginId(loginId);
@@ -61,7 +61,7 @@ public class MemberController extends Controller {
         }
         loginedMember = memberJoin;
 
-        System.out.printf("%s님 로그인 되었습니다.", loginedMember.getName());
+        System.out.printf("%s님 로그인 되었습니다.\n", loginedMember.getName());
     }
 
     private void memberLogout() {

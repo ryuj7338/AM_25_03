@@ -130,6 +130,12 @@ public class ArticleController extends Controller {
             System.out.printf("%d번 게시글은 없습니다.", id);
             return;
         }
+
+        if (foundArticle.getMemberId() != loginedMember.getId()) {
+            System.out.println("권한 없음");
+            return;
+        }
+
         articles.remove(foundArticle);
         System.out.printf("%d번 게시글이 삭제되었습니다.", id);
     }
@@ -144,8 +150,14 @@ public class ArticleController extends Controller {
             System.out.printf("%d번 게시글은 없습니다.", id);
             return;
         }
-        System.out.println("기존 제목: " + foundArticle.getId());
-        System.out.println("기존 내용: " + foundArticle.getTitle());
+
+        if (foundArticle.getMemberId() != loginedMember.getId()) {
+            System.out.println("권한이 없습니다.");
+            return;
+        }
+
+        System.out.println("기존 제목: " + foundArticle.getTitle());
+        System.out.println("기존 내용: " + foundArticle.getContent());
         System.out.print("새 제목: ");
         String newTitle = sc.nextLine().trim();
         System.out.print("새 내용: ");
@@ -176,8 +188,8 @@ public class ArticleController extends Controller {
     public void makeTestData() {
         System.out.println("== 테스트 데이터 생성 ==");
 
-        articles.add(new Article(1, "2025-01-01", "2025-03-20", 1,"제목1", "내용 1"));
-        articles.add(new Article(2, Util.getNowStr(), Util.getNowStr(), 1,"제목2", "내용 2"));
+        articles.add(new Article(1, "2025-01-01", "2025-03-20", 1, "제목1", "내용 1"));
+        articles.add(new Article(2, Util.getNowStr(), Util.getNowStr(), 1, "제목2", "내용 2"));
         articles.add(new Article(3, Util.getNowStr(), Util.getNowStr(), 2, "제목3", "내용 3"));
     }
 
