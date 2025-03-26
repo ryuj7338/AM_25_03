@@ -1,17 +1,34 @@
-package org.example;
+package org.example.controller;
 
+
+import org.example.dto.MemberJoin;
+import org.example.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MemberController {
-    Scanner sc;
-    List<MemberJoin> memberJoins = new ArrayList<>();
+public class MemberController extends Controller {
+    private Scanner sc;
+    private List<MemberJoin> memberJoins = new ArrayList<>();
+    private String cmd;
     int lastMembersId = 3;
 
     public MemberController(Scanner sc) {
         this.sc = sc;
+    }
+
+    public void doAction(String cmd, String actionMethod) {
+        this.cmd = cmd;
+
+        switch (actionMethod) {
+            case "join":
+                memberJoin();
+                break;
+            default:
+                System.out.println("Unknown action method");
+                break;
+        }
     }
 
     public void memberJoin() {

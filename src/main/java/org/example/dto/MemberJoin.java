@@ -1,8 +1,9 @@
-package org.example;
+package org.example.dto;
 
-public class MemberJoin {
-    int id;
-    String regDate;
+import java.lang.reflect.Member;
+
+public class MemberJoin extends Dto {
+
     String loginId;
     String loginPw;
     String name;

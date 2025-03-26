@@ -1,19 +1,48 @@
-package org.example;
+package org.example.controller;
+
+import org.example.dto.Article;
+import org.example.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ArticleController {
-    Scanner sc;
+public class ArticleController extends Controller {
+    private Scanner sc;
+    private String cmd;
     int lastArticleId = 3;
-    List<Article> articles = new ArrayList<>();
+    private List<Article> articles = new ArrayList<>();
 
     public ArticleController(Scanner sc) {
         this.sc = sc;
     }
 
-    public void articleWrite() {
+    public void doAction(String cmd, String actionMethodName) {
+        this.cmd = cmd;
+
+        switch (actionMethodName) {
+            case "write":
+                articleWrite();
+                break;
+            case "list":
+                articleList();
+                break;
+            case "detail":
+                articleDetail();
+                break;
+            case "delete":
+                articleDelete();
+                break;
+            case "modify":
+                articleModify();
+                break;
+            default:
+                System.out.println("Unknown action method");
+                break;
+        }
+    }
+
+    private void articleWrite() {
         System.out.println("== 게시글 작성 ==");
         int id = lastArticleId + 1;
         String regDate = Util.getNowStr();
@@ -31,7 +60,7 @@ public class ArticleController {
 
     }
 
-    public void articleList(String cmd) {
+    private void articleList() {
         System.out.println("== 게시글 목록 ==");
         if (articles.size() == 0) {
             System.out.println("목록이 없습니다.");
@@ -71,7 +100,7 @@ public class ArticleController {
         }
     }
 
-    public void articleDetails(String cmd) {
+    private void articleDetail() {
         int id = Integer.parseInt(cmd.split(" ")[2]);
 
         Article foundArticle = getArticle(id);
@@ -88,7 +117,7 @@ public class ArticleController {
         System.out.println("내용: " + foundArticle.getContent());
     }
 
-    public void articleDelete(String cmd) {
+    private void articleDelete() {
         int id = Integer.parseInt(cmd.split(" ")[2]);
 
         Article foundArticle = getArticle(id);
@@ -102,7 +131,7 @@ public class ArticleController {
         System.out.printf("%d번 게시글이 삭제되었습니다.", id);
     }
 
-    public void articleModify(String cmd) {
+    private void articleModify() {
         int id = Integer.parseInt(cmd.split(" ")[2]);
 
         Article foundArticle = getArticle(id);
